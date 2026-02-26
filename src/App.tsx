@@ -38,7 +38,7 @@ const COLORS = ['#10b981', '#3b82f6', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899'
 
 export default function App() {
   const [goals, setGoals] = useState<Goal[]>(INITIAL_DATA);
-  const [selectedCategory, setSelectedCategory] = useState<'all' | 'physical' | 'mental' | 'other'>('all');
+  const [selectedCategory, setSelectedCategory] = useState<'all' | 'physical' | 'mental'>('all');
 
   const timeProgress = useMemo(() => {
     const start = new Date(START_DATE).getTime();
@@ -93,6 +93,12 @@ export default function App() {
             const goal = newGoals.find(g => g.id === 'running');
             if (goal) goal.current = parseInt(match[1]);
           }
+        } else if (line.includes('Gym')) {
+          const match = line.match(/(\d+)\/(\d+)/);
+          if (match) {
+            const goal = newGoals.find(g => g.id === 'gym');
+            if (goal) goal.current = parseInt(match[1]);
+          }
         } else if (line.includes('Jump Ropes')) {
           const match = line.match(/([\d,]+)\s*\/\s*([\d,]+)/);
           if (match) {
@@ -116,12 +122,6 @@ export default function App() {
           if (match) {
             const goal = newGoals.find(g => g.id === 'shir-sasan');
             if (goal) goal.current = parseFloat(match[1]);
-          }
-        } else if (line.includes("Mom's Progress")) {
-          const match = line.match(/(\d+)\/(\d+)/);
-          if (match) {
-            const goal = newGoals.find(g => g.id === 'moms-progress');
-            if (goal) goal.current = parseInt(match[1]);
           }
         } else if (line.includes('Surya Namaskar')) {
           const match = line.match(/(\d+)\s*पूर्ण/);
@@ -328,30 +328,31 @@ export default function App() {
           >
             <h3 className="text-lg font-bold mb-6 flex items-center gap-2">
               <CheckCircle2 size={20} className="text-blue-500" />
-              Category Focus
+              Milestone Breakdown
             </h3>
-            <ResponsiveContainer width="100%" height="85%">
-              <PieChart>
-                <Pie
-                  data={[
-                    { name: 'Physical', value: goals.filter(g => g.category === 'physical').length },
-                    { name: 'Mental', value: goals.filter(g => g.category === 'mental').length },
-                    { name: 'Other', value: goals.filter(g => g.category === 'other').length },
-                  ]}
-                  cx="50%"
-                  cy="50%"
-                  innerRadius={60}
-                  outerRadius={100}
-                  paddingAngle={8}
-                  dataKey="value"
-                >
-                  {goals.map((_, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                  ))}
-                </Pie>
-                <Tooltip />
-              </PieChart>
-            </ResponsiveContainer>
+            <div className="space-y-6">
+              {[
+                { label: 'Completed (100%)', count: goals.filter(g => (g.current / g.target) >= 1).length, color: 'bg-emerald-500' },
+                { label: 'Advanced (75-99%)', count: goals.filter(g => (g.current / g.target) >= 0.75 && (g.current / g.target) < 1).length, color: 'bg-blue-500' },
+                { label: 'Steady (50-74%)', count: goals.filter(g => (g.current / g.target) >= 0.5 && (g.current / g.target) < 0.75).length, color: 'bg-indigo-500' },
+                { label: 'Starting (1-49%)', count: goals.filter(g => (g.current / g.target) > 0 && (g.current / g.target) < 0.5).length, color: 'bg-orange-500' },
+                { label: 'Not Started (0%)', count: goals.filter(g => g.current === 0).length, color: 'bg-slate-300' },
+              ].map((item) => (
+                <div key={item.label} className="space-y-2">
+                  <div className="flex justify-between text-sm font-medium">
+                    <span className="text-slate-600">{item.label}</span>
+                    <span className="text-slate-900 font-bold">{item.count} Goals</span>
+                  </div>
+                  <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
+                    <motion.div 
+                      initial={{ width: 0 }}
+                      animate={{ width: `${(item.count / goals.length) * 100}%` }}
+                      className={cn("h-full rounded-full", item.color)}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
           </motion.div>
         </section>
 
@@ -360,7 +361,7 @@ export default function App() {
           <div className="flex items-center justify-between">
             <h3 className="text-xl font-bold text-slate-800">Individual Goals</h3>
             <div className="flex gap-2 bg-slate-100 p-1 rounded-xl">
-              {(['all', 'physical', 'mental', 'other'] as const).map((cat) => (
+              {(['all', 'physical', 'mental'] as const).map((cat) => (
                 <button
                   key={cat}
                   onClick={() => setSelectedCategory(cat)}

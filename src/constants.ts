@@ -10,6 +10,14 @@ export const INITIAL_DATA: Goal[] = [
     category: 'physical',
   },
   {
+    id: 'gym',
+    name: 'Gym Sessions',
+    current: 2,
+    target: 51,
+    unit: 'Sessions',
+    category: 'physical',
+  },
+  {
     id: 'jump-ropes',
     name: 'Jump Ropes',
     current: 2028,
@@ -40,14 +48,6 @@ export const INITIAL_DATA: Goal[] = [
     target: 100,
     unit: 'Minutes',
     category: 'physical',
-  },
-  {
-    id: 'moms-progress',
-    name: "Mom's Progress",
-    current: 0,
-    target: 50,
-    unit: 'Days/Tasks',
-    category: 'other',
   },
   {
     id: 'surya-namaskar',
