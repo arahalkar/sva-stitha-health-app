@@ -16,7 +16,9 @@ import {
   Info,
   Flame,
   Brain,
-  Heart
+  Heart,
+  RefreshCw,
+  Database
 } from 'lucide-react';
 import { 
   PieChart, 
@@ -77,125 +79,105 @@ export default function App() {
     }));
   }, [goals]);
 
-  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
-  const [rawText, setRawText] = useState('');
+  const [isSyncing, setIsSyncing] = useState(false);
 
-  const handleUpdate = () => {
+  const fetchFromGoogleSheets = async () => {
+    let sheetId = process.env.VITE_GOOGLE_SHEET_ID || '';
+    const apiKey = process.env.VITE_GOOGLE_API_KEY;
+
+    // If user pasted the full URL, extract the ID
+    if (sheetId.includes('docs.google.com/spreadsheets/d/')) {
+      const match = sheetId.match(/\/d\/([a-zA-Z0-9-_]+)/);
+      if (match) sheetId = match[1];
+    }
+
+    if (!sheetId || !apiKey) {
+      alert('Google Sheets configuration missing. Please set VITE_GOOGLE_SHEET_ID and VITE_GOOGLE_API_KEY in your environment.');
+      return;
+    }
+
+    setIsSyncing(true);
+    
+    // Add a timeout to the fetch request
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 second timeout
+
     try {
-      const newGoals = [...goals];
+      // Fetch columns A through E to include Name, Current, Target, Unit, and Category
+      const range = 'Sheet1!A2:E50'; 
+      const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}?key=${apiKey}`;
       
-      // Basic parser for the provided format
-      const lines = rawText.split('\n');
-      lines.forEach(line => {
-        if (line.includes('Running')) {
-          const match = line.match(/(\d+)\/(\d+)/);
-          if (match) {
-            const goal = newGoals.find(g => g.id === 'running');
-            if (goal) goal.current = parseInt(match[1]);
-          }
-        } else if (line.includes('Gym')) {
-          const match = line.match(/(\d+)\/(\d+)/);
-          if (match) {
-            const goal = newGoals.find(g => g.id === 'gym');
-            if (goal) goal.current = parseInt(match[1]);
-          }
-        } else if (line.includes('Jump Ropes')) {
-          const match = line.match(/([\d,]+)\s*\/\s*([\d,]+)/);
-          if (match) {
-            const goal = newGoals.find(g => g.id === 'jump-ropes');
-            if (goal) goal.current = parseInt(match[1].replace(/,/g, ''));
-          }
-        } else if (line.includes('Sit-ups')) {
-          const match = line.match(/(\d+)\s*\/\s*([\d,]+)/);
-          if (match) {
-            const goal = newGoals.find(g => g.id === 'sit-ups');
-            if (goal) goal.current = parseInt(match[1]);
-          }
-        } else if (line.includes('Manache Shlok')) {
-          const match = line.match(/(\d+)\/(\d+)/);
-          if (match) {
-            const goal = newGoals.find(g => g.id === 'manache-shlok');
-            if (goal) goal.current = parseInt(match[1]);
-          }
-        } else if (line.includes('Shir-sasan')) {
-          const match = line.match(/([\d.]+)\s*मिनिटे/);
-          if (match) {
-            const goal = newGoals.find(g => g.id === 'shir-sasan');
-            if (goal) goal.current = parseFloat(match[1]);
-          }
-        } else if (line.includes('Surya Namaskar')) {
-          const match = line.match(/(\d+)\s*पूर्ण/);
-          if (match) {
-            const goal = newGoals.find(g => g.id === 'surya-namaskar');
-            if (goal) goal.current = parseInt(match[1]);
-          }
-        } else if (line.includes('Push-ups')) {
-          const match = line.match(/(\d+)\s*पूर्ण/);
-          if (match) {
-            const goal = newGoals.find(g => g.id === 'push-ups');
-            if (goal) goal.current = parseInt(match[1]);
-          }
-        }
+      const response = await fetch(url, { signal: controller.signal });
+      clearTimeout(timeoutId);
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error?.message || `HTTP error! status: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      const rows = data.values;
+
+      if (!rows || rows.length === 0) {
+        alert('No data found in the specified range (Sheet1!A2:E50). Ensure your sheet has data and the tab name is "Sheet1".');
+        return;
+      }
+
+      const syncedGoals: Goal[] = [];
+      let matchCount = 0;
+
+      rows.forEach((row: any[], index: number) => {
+        // Skip empty rows or rows without a name
+        if (!row[0] || row[0].toString().trim() === '') return;
+        
+        const nameFromSheet = row[0].toString().trim();
+        const currentVal = row[1] ? parseFloat(row[1].toString().replace(/,/g, '')) : 0;
+
+        // Column C: Target (Default to 100 if missing or invalid)
+        const targetVal = row[2] ? parseFloat(row[2].toString().replace(/,/g, '')) : 100;
+        
+        // Column D: Unit (Default to 'Units' if missing)
+        const unitVal = row[3] ? row[3].toString().trim() : 'Units';
+        
+        // Column E: Category (Default to 'physical' if missing or invalid)
+        const rawCategory = row[4] ? row[4].toString().trim().toLowerCase() : 'physical';
+        const categoryVal: 'physical' | 'mental' | 'other' = 
+          ['physical', 'mental', 'other'].includes(rawCategory) 
+            ? (rawCategory as 'physical' | 'mental' | 'other') 
+            : 'physical';
+
+        syncedGoals.push({
+          id: `sheet-${index}-${nameFromSheet.replace(/\s+/g, '-').toLowerCase()}`,
+          name: nameFromSheet,
+          current: isNaN(currentVal) ? 0 : currentVal,
+          target: isNaN(targetVal) ? 100 : targetVal,
+          unit: unitVal,
+          category: categoryVal
+        });
+        matchCount++;
       });
 
-      setGoals(newGoals);
-      setIsUpdateModalOpen(false);
-      setRawText('');
-    } catch (error) {
-      alert('Error parsing data. Please check the format.');
+      if (syncedGoals.length > 0) {
+        setGoals(syncedGoals);
+        alert(`Successfully synced! Loaded ${matchCount} goals from your Google Sheet.`);
+      } else {
+        alert('No valid goal data found in the sheet.');
+      }
+    } catch (error: any) {
+      clearTimeout(timeoutId);
+      console.error('Sync error:', error);
+      if (error.name === 'AbortError') {
+        alert('Sync timed out after 15 seconds. Please check your internet connection and ensure the Sheet ID is correct.');
+      } else {
+        alert(`Sync failed: ${error.message}\n\nCommon fixes:\n1. Make sure the sheet is "Public" (Anyone with link can view)\n2. Verify the API Key is correct\n3. Ensure the tab name is "Sheet1"`);
+      }
+    } finally {
+      setIsSyncing(false);
     }
   };
 
   return (
     <div className="min-h-screen bg-[#F8FAFC] text-slate-900 font-sans pb-12">
-      {/* Update Modal */}
-      <AnimatePresence>
-        {isUpdateModalOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setIsUpdateModalOpen(false)}
-              className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
-            />
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="relative bg-white rounded-3xl shadow-2xl w-full max-w-lg overflow-hidden"
-            >
-              <div className="p-8">
-                <h3 className="text-xl font-bold mb-2">Update Challenge Stats</h3>
-                <p className="text-sm text-slate-500 mb-6">Paste your daily update text below. The dashboard will automatically parse the values. Format example: "Running (1 Mile): 3/51"</p>
-                
-                <textarea 
-                  value={rawText}
-                  onChange={(e) => setRawText(e.target.value)}
-                  placeholder="Paste data here... e.g. Running (1 Mile): 3/51"
-                  className="w-full h-48 p-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all font-mono text-sm"
-                />
-
-                <div className="flex gap-3 mt-8">
-                  <button 
-                    onClick={() => setIsUpdateModalOpen(false)}
-                    className="flex-1 py-3 px-4 rounded-xl font-bold text-slate-500 hover:bg-slate-100 transition-colors"
-                  >
-                    Cancel
-                  </button>
-                  <button 
-                    onClick={handleUpdate}
-                    className="flex-1 py-3 px-4 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl font-bold shadow-lg shadow-emerald-200 transition-all"
-                  >
-                    Process Update
-                  </button>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
-
       {/* Header */}
       <header className="bg-white border-b border-slate-200 sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
@@ -285,12 +267,16 @@ export default function App() {
               </div>
             </div>
 
-            <button 
-              onClick={() => setIsUpdateModalOpen(true)}
-              className="mt-8 w-full py-4 bg-emerald-500 hover:bg-emerald-400 transition-colors rounded-2xl font-bold text-sm flex items-center justify-center gap-2"
-            >
-              Update Stats <ChevronRight size={18} />
-            </button>
+            <div className="flex flex-col gap-3 mt-8">
+              <button 
+                onClick={fetchFromGoogleSheets}
+                disabled={isSyncing}
+                className="w-full py-4 bg-emerald-500 hover:bg-emerald-600 text-white transition-all rounded-2xl font-bold text-sm flex items-center justify-center gap-2 disabled:opacity-50 shadow-lg shadow-emerald-200"
+              >
+                {isSyncing ? <RefreshCw size={18} className="animate-spin" /> : <Database size={18} />}
+                {isSyncing ? 'Updating...' : 'Update dashboard'}
+              </button>
+            </div>
           </motion.div>
         </section>
 
