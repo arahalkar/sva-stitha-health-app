@@ -206,7 +206,7 @@ export default function App() {
           >
             <div>
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold text-slate-800">५० @ ५० संकल्प</h2>
+                <h2 className="text-2xl font-bold text-slate-800">५० @ ५० सर्वांगीण साधना</h2>
                 <span className="px-4 py-1.5 bg-emerald-50 text-emerald-700 rounded-full text-sm font-semibold border border-emerald-100">
                   Active Challenge
                 </span>
