@@ -193,6 +193,46 @@ export default function App() {
       </header>
 
       <main className="max-w-7xl mx-auto px-4 py-8 space-y-8">
+        {/* Dedication Section */}
+        <motion.section 
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-white/40 backdrop-blur-sm rounded-3xl p-6 border border-slate-100 flex flex-col items-center justify-center"
+        >
+          <div className="flex items-center gap-8 md:gap-16">
+            <div className="flex flex-col items-center group">
+              <div className="w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden border-4 border-white shadow-xl mb-3 bg-slate-100 transition-transform group-hover:scale-105 duration-300">
+                <img 
+                  src="/guruji1.png" 
+                  alt="Tarun Pradhan Guruji" 
+                  className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all"
+                  referrerPolicy="no-referrer"
+                />
+              </div>
+              <span className="text-[10px] md:text-xs font-black uppercase tracking-widest text-slate-600">Tarun Pradhan Guruji</span>
+            </div>
+
+            <div className="flex flex-col items-center">
+              <div className="w-10 h-10 md:w-12 md:h-12 bg-emerald-500 rounded-full flex items-center justify-center text-white shadow-lg shadow-emerald-200 mb-2">
+                <Heart size={20} fill="currentColor" className="animate-pulse" />
+              </div>
+              <span className="text-[8px] md:text-[10px] font-bold uppercase tracking-[0.3em] text-emerald-600">Dedicated To</span>
+            </div>
+
+            <div className="flex flex-col items-center group">
+              <div className="w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden border-4 border-white shadow-xl mb-3 bg-slate-100 transition-transform group-hover:scale-105 duration-300">
+                <img 
+                  src="/guruji2.jpg" 
+                  alt="Ramdas Swami" 
+                  className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all"
+                  referrerPolicy="no-referrer"
+                />
+              </div>
+              <span className="text-[10px] md:text-xs font-black uppercase tracking-widest text-slate-600">Ramdas Swami</span>
+            </div>
+          </div>
+        </motion.section>
+
         {/* Hero Section / Overall Progress */}
         <section className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <motion.div 
