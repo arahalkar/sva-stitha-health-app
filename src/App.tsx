@@ -211,9 +211,25 @@ export default function App() {
                   Active Challenge
                 </span>
               </div>
-              <p className="text-slate-500 mb-8 max-w-md">
+              <p className="text-slate-500 mb-6 max-w-md">
                 Tracking progress towards the ultimate milestone. Every step counts towards the 50th birthday goal.
               </p>
+              <div className="mb-8 p-5 bg-emerald-50/40 rounded-2xl border border-emerald-100/50 relative overflow-hidden">
+                <div className="relative z-10">
+                  <p className="text-emerald-900 font-serif italic text-lg leading-relaxed mb-1">
+                    "उद्धरेदात्मनात्मानं नात्मानमवसादयेत्"
+                  </p>
+                  <p className="text-[10px] text-emerald-600 font-bold uppercase tracking-widest mb-3">
+                    — श्रीमद्भगवद्गीता | अध्याय ६, श्लोक ५
+                  </p>
+                  <p className="text-sm text-slate-600 leading-relaxed italic">
+                    आपण स्वतःच स्वतःचा उद्धार केला पाहिजे आणि स्वतःला अधोगती पासून वाचवायला पाहिजे.
+                  </p>
+                </div>
+                <div className="absolute -right-4 -bottom-4 opacity-[0.03] text-emerald-900">
+                  <Activity size={120} />
+                </div>
+              </div>
             </div>
 
             <div className="space-y-4">
