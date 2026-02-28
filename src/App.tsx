@@ -206,7 +206,6 @@ export default function App() {
                   src="/guruji1.png" 
                   alt="Tarun Pradhan Guruji" 
                   className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all"
-                  referrerPolicy="no-referrer"
                 />
               </div>
               <span className="text-[10px] md:text-xs font-black uppercase tracking-widest text-slate-600">Tarun Pradhan Guruji</span>
@@ -225,7 +224,6 @@ export default function App() {
                   src="/guruji2.jpg" 
                   alt="Ramdas Swami" 
                   className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all"
-                  referrerPolicy="no-referrer"
                 />
               </div>
               <span className="text-[10px] md:text-xs font-black uppercase tracking-widest text-slate-600">Ramdas Swami</span>
