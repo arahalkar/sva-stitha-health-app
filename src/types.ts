@@ -4,7 +4,7 @@ export interface Goal {
   current: number;
   target: number;
   unit: string;
-  category: 'physical' | 'mental' | 'other';
+  category: string;
 }
 
 export interface DashboardData {

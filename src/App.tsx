@@ -21,9 +21,6 @@ import {
   Database
 } from 'lucide-react';
 import { 
-  PieChart, 
-  Pie, 
-  Cell, 
   ResponsiveContainer, 
   BarChart, 
   Bar, 
@@ -36,11 +33,14 @@ import { cn } from './lib/utils';
 import { INITIAL_DATA, START_DATE, TARGET_DATE } from './constants';
 import { Goal } from './types';
 
-const COLORS = ['#10b981', '#3b82f6', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899'];
-
 export default function App() {
   const [goals, setGoals] = useState<Goal[]>(INITIAL_DATA);
-  const [selectedCategory, setSelectedCategory] = useState<'all' | 'physical' | 'mental'>('all');
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+
+  const categories = useMemo(() => {
+    const cats = new Set(goals.map(g => g.category));
+    return ['all', ...Array.from(cats)];
+  }, [goals]);
 
   const timeProgress = useMemo(() => {
     const start = new Date(START_DATE).getTime();
@@ -139,12 +139,8 @@ export default function App() {
         // Column D: Unit (Default to 'Units' if missing)
         const unitVal = row[3] ? row[3].toString().trim() : 'Units';
         
-        // Column E: Category (Default to 'physical' if missing or invalid)
-        const rawCategory = row[4] ? row[4].toString().trim().toLowerCase() : 'physical';
-        const categoryVal: 'physical' | 'mental' | 'other' = 
-          ['physical', 'mental', 'other'].includes(rawCategory) 
-            ? (rawCategory as 'physical' | 'mental' | 'other') 
-            : 'physical';
+        // Column E: Category (Default to 'physical' if missing)
+        const categoryVal = row[4] ? row[4].toString().trim().toLowerCase() : 'physical';
 
         syncedGoals.push({
           id: `sheet-${index}-${nameFromSheet.replace(/\s+/g, '-').toLowerCase()}`,
@@ -362,13 +358,13 @@ export default function App() {
         <section className="space-y-6">
           <div className="flex items-center justify-between">
             <h3 className="text-xl font-bold text-slate-800">Individual Goals</h3>
-            <div className="flex gap-2 bg-slate-100 p-1 rounded-xl">
-              {(['all', 'physical', 'mental'] as const).map((cat) => (
+            <div className="flex gap-2 bg-slate-100 p-1 rounded-xl overflow-x-auto no-scrollbar">
+              {categories.map((cat) => (
                 <button
                   key={cat}
                   onClick={() => setSelectedCategory(cat)}
                   className={cn(
-                    "px-4 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all",
+                    "px-4 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all whitespace-nowrap",
                     selectedCategory === cat 
                       ? "bg-white text-emerald-600 shadow-sm" 
                       : "text-slate-500 hover:text-slate-700"
@@ -399,11 +395,13 @@ export default function App() {
                         "p-2.5 rounded-xl",
                         goal.category === 'physical' ? "bg-orange-50 text-orange-600" :
                         goal.category === 'mental' ? "bg-purple-50 text-purple-600" :
-                        "bg-blue-50 text-blue-600"
+                        goal.category === 'other' ? "bg-blue-50 text-blue-600" :
+                        "bg-slate-50 text-slate-600"
                       )}>
                         {goal.category === 'physical' ? <Flame size={20} /> :
                          goal.category === 'mental' ? <Brain size={20} /> :
-                         <Heart size={20} />}
+                         goal.category === 'other' ? <Heart size={20} /> :
+                         <Target size={20} />}
                       </div>
                       <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">
                         {goal.category}
