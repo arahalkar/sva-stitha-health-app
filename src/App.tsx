@@ -203,7 +203,7 @@ export default function App() {
             <div className="flex flex-col items-center group">
               <div className="w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden border-4 border-white shadow-xl mb-3 bg-slate-100 transition-transform group-hover:scale-105 duration-300">
                 <img 
-                  src="guruji1.png" 
+                  src="/guruji1.png" 
                   alt="Tarun Pradhan Guruji" 
                   className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all"
                 />
@@ -221,7 +221,7 @@ export default function App() {
             <div className="flex flex-col items-center group">
               <div className="w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden border-4 border-white shadow-xl mb-3 bg-slate-100 transition-transform group-hover:scale-105 duration-300">
                 <img 
-                  src="guruji2.jpg" 
+                  src="/guruji2.jpg" 
                   alt="Ramdas Swami" 
                   className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all"
                 />
