@@ -251,13 +251,14 @@ export default function App() {
               <div className="mb-8 p-5 bg-emerald-50/40 rounded-2xl border border-emerald-100/50 relative overflow-hidden">
                 <div className="relative z-10">
                   <p className="text-emerald-900 font-serif italic text-lg leading-relaxed mb-1">
-                    "उद्धरेदात्मनात्मानं नात्मानमवसादयेत्"
+                    "उद्धरेदात्मनात्मानं नात्मानमवसादयेत् |<br/>
+                    आत्मैव ह्यात्मनो बन्धुरात्मैव रिपुरात्मनः ||"
                   </p>
                   <p className="text-[10px] text-emerald-600 font-bold uppercase tracking-widest mb-3">
                     — श्रीमद्भगवद्गीता | अध्याय ६, श्लोक ५
                   </p>
                   <p className="text-sm text-slate-600 leading-relaxed italic">
-                    आपण स्वतःच स्वतःचा उद्धार केला पाहिजे आणि स्वतःला अधोगती पासून वाचवायला पाहिजे.
+                    आपण स्वतःच स्वतःचा उद्धार केला पाहिजे आणि स्वतःला अधोगती पासून वाचवायला पाहिजे. कारण, हे मनच स्वतःचा मित्र आहे आणि शत्रू देखील मनच आहे.
                   </p>
                 </div>
                 <div className="absolute -right-4 -bottom-4 opacity-[0.03] text-emerald-900">
