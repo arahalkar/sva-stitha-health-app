@@ -18,7 +18,14 @@ import {
   Brain,
   Heart,
   RefreshCw,
-  Database
+  Database,
+  Sun,
+  Dumbbell,
+  Zap,
+  BookOpen,
+  Timer,
+  Footprints,
+  Dna
 } from 'lucide-react';
 import { 
   ResponsiveContainer, 
@@ -41,6 +48,23 @@ export default function App() {
     const cats = new Set(goals.map(g => g.category));
     return ['all', ...Array.from(cats)];
   }, [goals]);
+
+  const getGoalIcon = (name: string, category: string) => {
+    const lowerName = name.toLowerCase();
+    if (lowerName.includes('surya') || lowerName.includes('namaskar')) return <Sun size={20} />;
+    if (lowerName.includes('running') || lowerName.includes('mile')) return <Footprints size={20} />;
+    if (lowerName.includes('gym') || lowerName.includes('push-up') || lowerName.includes('sit-up')) return <Dumbbell size={20} />;
+    if (lowerName.includes('rope')) return <Zap size={20} />;
+    if (lowerName.includes('shlok') || lowerName.includes('manache')) return <BookOpen size={20} />;
+    if (lowerName.includes('sasan') || lowerName.includes('shir')) return <Timer size={20} />;
+    if (lowerName.includes('yoga')) return <Dna size={20} />;
+
+    // Fallback to category icons
+    if (category === 'physical') return <Flame size={20} />;
+    if (category === 'mental') return <Brain size={20} />;
+    if (category === 'other') return <Heart size={20} />;
+    return <Target size={20} />;
+  };
 
   const timeProgress = useMemo(() => {
     const start = new Date(START_DATE).getTime();
@@ -437,10 +461,7 @@ export default function App() {
                         goal.category === 'other' ? "bg-blue-50 text-blue-600" :
                         "bg-slate-50 text-slate-600"
                       )}>
-                        {goal.category === 'physical' ? <Flame size={20} /> :
-                         goal.category === 'mental' ? <Brain size={20} /> :
-                         goal.category === 'other' ? <Heart size={20} /> :
-                         <Target size={20} />}
+                        {getGoalIcon(goal.name, goal.category)}
                       </div>
                       <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">
                         {goal.category}
