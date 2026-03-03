@@ -197,17 +197,17 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] text-slate-900 font-sans pb-12">
+    <div className="min-h-screen bg-slate-950 text-slate-100 font-sans pb-12">
       {/* Header */}
-      <header className="bg-white border-b border-slate-200 sticky top-0 z-10">
+      <header className="bg-slate-900 border-b border-slate-800 sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-10 h-10 bg-emerald-500 rounded-xl flex items-center justify-center text-white shadow-lg shadow-emerald-200">
+            <div className="w-10 h-10 bg-emerald-500 rounded-xl flex items-center justify-center text-white shadow-lg shadow-emerald-500/20">
               <Activity size={24} />
             </div>
-            <h1 className="text-xl font-bold tracking-tight text-slate-800">स्व-स्थित</h1>
+            <h1 className="text-xl font-bold tracking-tight text-slate-100">स्व-स्थित</h1>
           </div>
-          <div className="flex items-center gap-4 text-sm font-medium text-slate-500">
+          <div className="flex items-center gap-4 text-sm font-medium text-slate-400">
             <div className="flex items-center gap-1">
               <Calendar size={16} />
               <span>{new Date().toLocaleDateString('mr-IN', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
@@ -221,36 +221,36 @@ export default function App() {
         <motion.section 
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white/40 backdrop-blur-sm rounded-3xl p-6 border border-slate-100 flex flex-col items-center justify-center"
+          className="bg-slate-900/40 backdrop-blur-sm rounded-3xl p-6 border border-slate-800 flex flex-col items-center justify-center"
         >
           <div className="flex items-center gap-8 md:gap-16">
             <div className="flex flex-col items-center group">
-              <div className="w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden border-4 border-white shadow-xl mb-3 bg-slate-100 transition-transform group-hover:scale-105 duration-300">
+              <div className="w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden border-4 border-slate-800 shadow-xl mb-3 bg-slate-800 transition-transform group-hover:scale-105 duration-300">
                 <img 
                   src="/guruji1.png" 
                   alt="Tarun Pradhan Guruji" 
                   className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all"
                 />
               </div>
-              <span className="text-[10px] md:text-xs font-black uppercase tracking-widest text-slate-600">Tarun Pradhan Guruji</span>
+              <span className="text-[10px] md:text-xs font-black uppercase tracking-widest text-slate-400">Tarun Pradhan Guruji</span>
             </div>
 
             <div className="flex flex-col items-center">
-              <div className="w-10 h-10 md:w-12 md:h-12 bg-emerald-500 rounded-full flex items-center justify-center text-white shadow-lg shadow-emerald-200 mb-2">
+              <div className="w-10 h-10 md:w-12 md:h-12 bg-emerald-500 rounded-full flex items-center justify-center text-white shadow-lg shadow-emerald-500/20 mb-2">
                 <Heart size={20} fill="currentColor" className="animate-pulse" />
               </div>
-              <span className="text-[8px] md:text-[10px] font-bold uppercase tracking-[0.3em] text-emerald-600">Dedicated To</span>
+              <span className="text-[8px] md:text-[10px] font-bold uppercase tracking-[0.3em] text-emerald-500">Dedicated To</span>
             </div>
 
             <div className="flex flex-col items-center group">
-              <div className="w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden border-4 border-white shadow-xl mb-3 bg-slate-100 transition-transform group-hover:scale-105 duration-300">
+              <div className="w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden border-4 border-slate-800 shadow-xl mb-3 bg-slate-800 transition-transform group-hover:scale-105 duration-300">
                 <img 
                   src="/guruji2.jpg" 
                   alt="Ramdas Swami" 
                   className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all"
                 />
               </div>
-              <span className="text-[10px] md:text-xs font-black uppercase tracking-widest text-slate-600">Ramdas Swami</span>
+              <span className="text-[10px] md:text-xs font-black uppercase tracking-widest text-slate-400">Ramdas Swami</span>
             </div>
           </div>
         </motion.section>
@@ -260,32 +260,32 @@ export default function App() {
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="lg:col-span-2 bg-white rounded-3xl p-8 shadow-sm border border-slate-100 flex flex-col justify-between"
+            className="lg:col-span-2 bg-slate-900 rounded-3xl p-8 shadow-sm border border-slate-800 flex flex-col justify-between"
           >
             <div>
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold text-slate-800">५० @ ५० सर्वांगीण साधना</h2>
-                <span className="px-4 py-1.5 bg-emerald-50 text-emerald-700 rounded-full text-sm font-semibold border border-emerald-100">
+                <h2 className="text-2xl font-bold text-slate-100">५० @ ५० सर्वांगीण साधना</h2>
+                <span className="px-4 py-1.5 bg-emerald-500/10 text-emerald-400 rounded-full text-sm font-semibold border border-emerald-500/20">
                   Active Challenge
                 </span>
               </div>
-              <p className="text-slate-500 mb-6 max-w-md">
+              <p className="text-slate-400 mb-6 max-w-md">
                 Tracking progress towards the ultimate milestone. Every step counts towards the 50th birthday goal.
               </p>
-              <div className="mb-8 p-5 bg-emerald-50/40 rounded-2xl border border-emerald-100/50 relative overflow-hidden">
+              <div className="mb-8 p-5 bg-emerald-500/5 rounded-2xl border border-emerald-500/10 relative overflow-hidden">
                 <div className="relative z-10">
-                  <p className="text-emerald-900 font-serif italic text-lg leading-relaxed mb-1">
+                  <p className="text-emerald-400 font-serif italic text-lg leading-relaxed mb-1">
                     "उद्धरेदात्मनात्मानं नात्मानमवसादयेत् |<br/>
                     आत्मैव ह्यात्मनो बन्धुरात्मैव रिपुरात्मनः ||"
                   </p>
-                  <p className="text-[10px] text-emerald-600 font-bold uppercase tracking-widest mb-3">
+                  <p className="text-[10px] text-emerald-500/60 font-bold uppercase tracking-widest mb-3">
                     — श्रीमद्भगवद्गीता | अध्याय ६, श्लोक ५
                   </p>
-                  <p className="text-sm text-slate-600 leading-relaxed italic">
+                  <p className="text-sm text-slate-400 leading-relaxed italic">
                     आपण स्वतःच स्वतःचा उद्धार केला पाहिजे आणि स्वतःला अधोगती पासून वाचवायला पाहिजे. कारण, हे मनच स्वतःचा मित्र आहे आणि शत्रू देखील मनच आहे.
                   </p>
                 </div>
-                <div className="absolute -right-4 -bottom-4 opacity-[0.03] text-emerald-900">
+                <div className="absolute -right-4 -bottom-4 opacity-[0.05] text-emerald-400">
                   <Activity size={120} />
                 </div>
               </div>
@@ -293,18 +293,18 @@ export default function App() {
 
             <div className="space-y-4">
               <div className="flex justify-between items-end">
-                <span className="text-sm font-semibold text-slate-400 uppercase tracking-wider">Time Progress</span>
-                <span className="text-3xl font-black text-slate-800">{timeProgress.percentage.toFixed(1)}%</span>
+                <span className="text-sm font-semibold text-slate-500 uppercase tracking-wider">Time Progress</span>
+                <span className="text-3xl font-black text-slate-100">{timeProgress.percentage.toFixed(1)}%</span>
               </div>
-              <div className="h-4 bg-slate-100 rounded-full overflow-hidden">
+              <div className="h-4 bg-slate-800 rounded-full overflow-hidden">
                 <motion.div 
                   initial={{ width: 0 }}
                   animate={{ width: `${timeProgress.percentage}%` }}
                   transition={{ duration: 1, ease: "easeOut" }}
-                  className="h-full bg-gradient-to-r from-emerald-400 to-emerald-600 rounded-full shadow-inner"
+                  className="h-full bg-gradient-to-r from-emerald-500 to-emerald-600 rounded-full shadow-inner"
                 />
               </div>
-              <div className="flex justify-between text-sm font-medium text-slate-500">
+              <div className="flex justify-between text-sm font-medium text-slate-400">
                 <span>Started: {new Date(START_DATE).toLocaleDateString()}</span>
                 <span>{timeProgress.daysLeft} days remaining</span>
               </div>
@@ -361,20 +361,21 @@ export default function App() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2 }}
-            className="bg-white rounded-3xl p-8 shadow-sm border border-slate-100 h-[400px]"
+            className="bg-slate-900 rounded-3xl p-8 shadow-sm border border-slate-800 h-[400px]"
           >
-            <h3 className="text-lg font-bold mb-6 flex items-center gap-2">
+            <h3 className="text-lg font-bold mb-6 flex items-center gap-2 text-slate-100">
               <Target size={20} className="text-emerald-500" />
               Goal Completion Distribution
             </h3>
             <ResponsiveContainer width="100%" height="85%">
               <BarChart data={chartData} layout="vertical" margin={{ left: 40 }}>
-                <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#f1f5f9" />
+                <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#1e293b" />
                 <XAxis type="number" domain={[0, 100]} hide />
-                <YAxis dataKey="name" type="category" width={100} tick={{ fontSize: 12, fontWeight: 500 }} />
+                <YAxis dataKey="name" type="category" width={100} tick={{ fontSize: 12, fontWeight: 500, fill: '#94a3b8' }} />
                 <Tooltip 
-                  cursor={{ fill: '#f8fafc' }}
-                  contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)' }}
+                  cursor={{ fill: '#1e293b' }}
+                  contentStyle={{ backgroundColor: '#0f172a', borderRadius: '12px', border: '1px solid #1e293b', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.5)' }}
+                  itemStyle={{ color: '#f8fafc' }}
                 />
                 <Bar dataKey="progress" fill="#10b981" radius={[0, 4, 4, 0]} barSize={20} />
               </BarChart>
@@ -385,9 +386,9 @@ export default function App() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.3 }}
-            className="bg-white rounded-3xl p-8 shadow-sm border border-slate-100 h-[400px]"
+            className="bg-slate-900 rounded-3xl p-8 shadow-sm border border-slate-800 h-[400px]"
           >
-            <h3 className="text-lg font-bold mb-6 flex items-center gap-2">
+            <h3 className="text-lg font-bold mb-6 flex items-center gap-2 text-slate-100">
               <CheckCircle2 size={20} className="text-blue-500" />
               Milestone Breakdown
             </h3>
@@ -397,14 +398,14 @@ export default function App() {
                 { label: 'Advanced (75-99%)', count: goals.filter(g => (g.current / g.target) >= 0.75 && (g.current / g.target) < 1).length, color: 'bg-blue-500' },
                 { label: 'Steady (50-74%)', count: goals.filter(g => (g.current / g.target) >= 0.5 && (g.current / g.target) < 0.75).length, color: 'bg-indigo-500' },
                 { label: 'Starting (1-49%)', count: goals.filter(g => (g.current / g.target) > 0 && (g.current / g.target) < 0.5).length, color: 'bg-orange-500' },
-                { label: 'Not Started (0%)', count: goals.filter(g => g.current === 0).length, color: 'bg-slate-300' },
+                { label: 'Not Started (0%)', count: goals.filter(g => g.current === 0).length, color: 'bg-slate-700' },
               ].map((item) => (
                 <div key={item.label} className="space-y-2">
                   <div className="flex justify-between text-sm font-medium">
-                    <span className="text-slate-600">{item.label}</span>
-                    <span className="text-slate-900 font-bold">{item.count} Goals</span>
+                    <span className="text-slate-400">{item.label}</span>
+                    <span className="text-slate-100 font-bold">{item.count} Goals</span>
                   </div>
-                  <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
+                  <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
                     <motion.div 
                       initial={{ width: 0 }}
                       animate={{ width: `${(item.count / goals.length) * 100}%` }}
@@ -420,8 +421,8 @@ export default function App() {
         {/* Goals Grid */}
         <section className="space-y-6">
           <div className="flex items-center justify-between">
-            <h3 className="text-xl font-bold text-slate-800">Individual Goals</h3>
-            <div className="flex gap-2 bg-slate-100 p-1 rounded-xl overflow-x-auto no-scrollbar">
+            <h3 className="text-xl font-bold text-slate-100">Individual Goals</h3>
+            <div className="flex gap-2 bg-slate-900 p-1 rounded-xl overflow-x-auto no-scrollbar border border-slate-800">
               {categories.map((cat) => (
                 <button
                   key={cat}
@@ -429,8 +430,8 @@ export default function App() {
                   className={cn(
                     "px-4 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all whitespace-nowrap",
                     selectedCategory === cat 
-                      ? "bg-white text-emerald-600 shadow-sm" 
-                      : "text-slate-500 hover:text-slate-700"
+                      ? "bg-slate-800 text-emerald-400 shadow-sm" 
+                      : "text-slate-500 hover:text-slate-300"
                   )}
                 >
                   {cat}
@@ -451,38 +452,38 @@ export default function App() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.95 }}
                     transition={{ delay: index * 0.05 }}
-                    className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 hover:shadow-md transition-shadow group"
+                    className="bg-slate-900 rounded-2xl p-6 shadow-sm border border-slate-800 hover:border-emerald-500/30 transition-all group"
                   >
                     <div className="flex justify-between items-start mb-4">
                       <div className={cn(
                         "p-2.5 rounded-xl",
-                        goal.category === 'physical' ? "bg-orange-50 text-orange-600" :
-                        goal.category === 'mental' ? "bg-purple-50 text-purple-600" :
-                        goal.category === 'other' ? "bg-blue-50 text-blue-600" :
-                        "bg-slate-50 text-slate-600"
+                        goal.category === 'physical' ? "bg-orange-500/10 text-orange-500" :
+                        goal.category === 'mental' ? "bg-purple-500/10 text-purple-500" :
+                        goal.category === 'other' ? "bg-blue-500/10 text-blue-500" :
+                        "bg-slate-800 text-slate-400"
                       )}>
                         {getGoalIcon(goal.name, goal.category)}
                       </div>
-                      <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">
+                      <span className="text-[10px] font-bold uppercase tracking-widest text-slate-500">
                         {goal.category}
                       </span>
                     </div>
                     
-                    <h4 className="font-bold text-slate-800 mb-1 group-hover:text-emerald-600 transition-colors">
+                    <h4 className="font-bold text-slate-100 mb-1 group-hover:text-emerald-400 transition-colors">
                       {goal.name}
                     </h4>
-                    <div className="text-sm text-slate-500 mb-4">
-                      <span className="font-bold text-slate-800">{goal.current.toLocaleString()}</span>
+                    <div className="text-sm text-slate-400 mb-4">
+                      <span className="font-bold text-slate-200">{goal.current.toLocaleString()}</span>
                       <span className="mx-1">/</span>
                       <span>{goal.target.toLocaleString()} {goal.unit}</span>
                     </div>
 
                     <div className="space-y-2">
                       <div className="flex justify-between items-center text-[10px] font-bold uppercase tracking-tighter">
-                        <span className="text-slate-400">Progress</span>
-                        <span className="text-emerald-600">{progress.toFixed(1)}%</span>
+                        <span className="text-slate-500">Progress</span>
+                        <span className="text-emerald-500">{progress.toFixed(1)}%</span>
                       </div>
-                      <div className="h-2 bg-slate-50 rounded-full overflow-hidden">
+                      <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
                         <motion.div 
                           initial={{ width: 0 }}
                           animate={{ width: `${Math.min(progress, 100)}%` }}
