@@ -39,8 +39,6 @@ import {
 import { cn } from './lib/utils';
 import { INITIAL_DATA, START_DATE, TARGET_DATE } from './constants';
 import { Goal } from './types';
-import guruji1 from './assets/guruji1.png';
-import guruji2 from './assets/guruji2.jpg';
 
 export default function App() {
   const [goals, setGoals] = useState<Goal[]>(INITIAL_DATA);
@@ -229,7 +227,7 @@ export default function App() {
             <div className="flex flex-col items-center group">
               <div className="w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden border-4 border-slate-800 shadow-xl mb-3 bg-slate-800 transition-transform group-hover:scale-105 duration-300">
                 <img 
-                  src={guruji1} 
+                  src="/guruji1.png" 
                   alt="Tarun Pradhan Guruji" 
                   className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all"
                 />
@@ -247,7 +245,7 @@ export default function App() {
             <div className="flex flex-col items-center group">
               <div className="w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden border-4 border-slate-800 shadow-xl mb-3 bg-slate-800 transition-transform group-hover:scale-105 duration-300">
                 <img 
-                  src={guruji2} 
+                  src="/guruji2.jpg" 
                   alt="Ramdas Swami" 
                   className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all"
                 />
